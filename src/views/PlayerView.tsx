@@ -133,6 +133,7 @@ export default function PlayerView() {
       startTimeUpdater()
     } else if (state === YT.PlayerState.PAUSED) {
       setPlaying(false)
+      if (timeUpdateRef.current) clearInterval(timeUpdateRef.current)
     } else if (state === YT.PlayerState.ENDED) {
       setPlaying(false)
       if (timeUpdateRef.current) clearInterval(timeUpdateRef.current)

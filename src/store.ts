@@ -192,7 +192,7 @@ export const useStore = create<PocketState>((set, get) => ({
   /* Preferences */
   colourScheme: saved.colourScheme ?? 'dark',
   tileFraction: initialFraction,
-  tileSize: saved.tileSize ?? computeTileSize(initialFraction),
+  tileSize: computeTileSize(initialFraction),
   preRollDuration: saved.preRollDuration ?? 3,
   timelineRows: saved.timelineRows ?? 1,
   mainButtons: saved.mainButtons ?? DEFAULT_MAIN_BUTTONS,

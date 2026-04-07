@@ -68,7 +68,7 @@ export default function FrontView() {
 
       <div className="front__list">
         {favourites.map((v) => (
-          <div
+          <button
             key={v.videoId}
             className="front__item front__item--fav"
             onClick={() => handleVideoClick(v.videoId)}
@@ -78,10 +78,10 @@ export default function FrontView() {
           >
             <span className="front__star">★</span>
             <span className="front__title">{v.title}</span>
-          </div>
+          </button>
         ))}
         {history.map((v) => (
-          <div
+          <button
             key={v.videoId}
             className="front__item"
             onClick={() => handleVideoClick(v.videoId)}
@@ -91,7 +91,7 @@ export default function FrontView() {
           >
             <span className="front__star front__star--empty">☆</span>
             <span className="front__title">{v.title}</span>
-          </div>
+          </button>
         ))}
       </div>
 

@@ -17,6 +17,7 @@ export default function TileButton({ label, icon, active, onClick }: TileButtonP
       style={{ width: tileSize, height: tileSize }}
       onClick={onClick}
       title={label}
+      aria-label={label}
     >
       <span className="tile-btn__icon">{icon ?? label}</span>
     </button>
