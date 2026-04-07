@@ -225,7 +225,6 @@ export const useStore = create<PocketState>((set, get) => ({
   /* ── Actions ──────────────────────────────────────────────────── */
 
   setColourScheme: (scheme) => {
-    document.documentElement.setAttribute('data-theme', scheme)
     set({ colourScheme: scheme })
     persist(get())
   },
