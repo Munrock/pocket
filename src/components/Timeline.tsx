@@ -36,8 +36,11 @@ export default function Timeline({ onSeek }: TimelineProps) {
   const rows = Array.from({ length: timelineRows }, (_, i) => {
     const rowStart = i * rowDuration
     const rowEnd = rowStart + rowDuration
+    const isLastRow = i === timelineRows - 1
     const progress = Math.max(0, Math.min(1, (currentTime - rowStart) / rowDuration))
-    const rowBookmarks = bookmarks.filter((b: Bookmark) => b.time >= rowStart && b.time <= rowEnd)
+    const rowBookmarks = bookmarks.filter(
+      (b: Bookmark) => b.time >= rowStart && (isLastRow ? b.time <= rowEnd : b.time < rowEnd),
+    )
 
     // Loop region within this row
     let loopLeft: number | null = null
