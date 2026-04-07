@@ -18,7 +18,7 @@ export function extractVideoId(input: string): string | null {
       const id = url.pathname.slice(1).split('/')[0]
       return isValidVideoId(id) ? id : null
     }
-    if (url.hostname.includes('youtube.com')) {
+    if (url.hostname === 'youtube.com' || url.hostname === 'www.youtube.com' || url.hostname === 'm.youtube.com') {
       // /watch?v=ID
       const vParam = url.searchParams.get('v')
       if (vParam && isValidVideoId(vParam)) return vParam

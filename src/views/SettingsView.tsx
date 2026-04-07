@@ -108,7 +108,7 @@ export default function SettingsView() {
       </div>
 
       <div className="settings__section">
-        <h3 className="settings__label">Timeline Rows (default: {timelineRows})</h3>
+        <h3 className="settings__label">Timeline Rows: {timelineRows}</h3>
         <div className="settings__row">
           <button className="settings__opt" onClick={() => setTimelineRows(Math.max(1, timelineRows - 1))}>−</button>
           <span className="settings__value">{timelineRows}</span>

@@ -252,8 +252,6 @@ export default function PlayerView() {
 
   // Render a button by ID
   const renderButton = (id: ButtonId) => {
-    const bookmarks = getBookmarks()
-
     switch (id) {
       case 'playPause':
         return <TileButton key={id} label={playing ? 'Pause' : 'Play'} icon={playing ? '⏸' : '▶'} onClick={handlePlayPause} />
@@ -303,10 +301,6 @@ export default function PlayerView() {
       default:
         return null
     }
-
-    // Needed to suppress the linter warning about bookmarks being unused
-    // The bookmarks variable is used implicitly through getBookmarks()
-    void bookmarks
   }
 
   const opts: YouTubeProps['opts'] = {
