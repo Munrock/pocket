@@ -1,0 +1,121 @@
+.front {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  background-color: var(--colour-bg-1);
+  padding: 1rem;
+}
+
+.front__form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.front__input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid var(--colour-trim-1);
+  border-radius: 0.375rem;
+  background: var(--colour-bg-2);
+  color: var(--colour-text);
+  font-size: 1rem;
+  outline: none;
+}
+
+.front__input::placeholder {
+  color: var(--colour-bg-4);
+}
+
+.front__input:focus {
+  border-color: var(--colour-trim-2);
+}
+
+.front__go {
+  padding: 0.75rem 1.25rem;
+  border: 2px solid var(--colour-trim-1);
+  border-radius: 0.375rem;
+  background: var(--colour-trim-1);
+  color: var(--colour-bg-1);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.front__go:hover {
+  background: var(--colour-trim-2);
+  border-color: var(--colour-trim-2);
+}
+
+.front__error {
+  color: var(--colour-warn-2);
+  font-size: 0.875rem;
+  margin: 0 0 0.5rem;
+}
+
+.front__list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.front__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--colour-bg-3);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.front__item:hover {
+  background: var(--colour-bg-2);
+}
+
+.front__item--fav {
+  background: var(--colour-bg-2);
+}
+
+.front__star {
+  font-size: 1.25rem;
+  color: var(--colour-warn-1);
+  flex-shrink: 0;
+}
+
+.front__star--empty {
+  color: var(--colour-bg-4);
+}
+
+.front__title {
+  color: var(--colour-text);
+  font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.front__footer {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 0.5rem;
+}
+
+.scheme-toggle {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--colour-trim-1);
+  border-radius: 0.375rem;
+  background: var(--colour-bg-3);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.scheme-toggle:hover {
+  border-color: var(--colour-trim-2);
+}
