@@ -1,0 +1,47 @@
+/*
+ * Colour scheme custom properties
+ * --------------------------------
+ * All colour values for the application are defined here.
+ * Direct colour values (hex, rgb, hsl, named colours, etc.) are PROHIBITED
+ * anywhere else in the codebase — use only these custom properties.
+ *
+ * Naming convention:
+ *   --colour-text         : primary text colour
+ *   --colour-trim-{1-3}   : trim / highlight accent colours
+ *   --colour-warn-{1-2}   : warning colours (caution, danger)
+ *   --colour-bg-{1-4}     : background colours (1 = deepest, 4 = lightest surface)
+ */
+
+/* ── Dark mode (default) ─────────────────────────────────────────── */
+:root {
+  --colour-text:   #c8d0dc;
+
+  --colour-trim-1: #91c4d9;
+  --colour-trim-2: #00e4ff;
+  --colour-trim-3: #a5f4f7;
+
+  --colour-warn-1: #ffae42;
+  --colour-warn-2: #ff4c4c;
+
+  --colour-bg-1:   #0d0f14;
+  --colour-bg-2:   #141720;
+  --colour-bg-3:   #1c2030;
+  --colour-bg-4:   #252a3a;
+}
+
+/* ── Light mode ──────────────────────────────────────────────────── */
+:root[data-theme="light"] {
+  --colour-text:   #1a1f2e;
+
+  --colour-trim-1: #3a7fa0;
+  --colour-trim-2: #0070a8;
+  --colour-trim-3: #3a9fa5;
+
+  --colour-warn-1: #c47a00;
+  --colour-warn-2: #cc2222;
+
+  --colour-bg-1:   #ffffff;
+  --colour-bg-2:   #f0f4f8;
+  --colour-bg-3:   #dde4ed;
+  --colour-bg-4:   #ccd5e2;
+}

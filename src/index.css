@@ -1,0 +1,32 @@
+@import './styles/colours.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--colour-bg-1);
+  color: var(--colour-text);
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--colour-text);
+  margin: 0;
+}
+
+a {
+  color: var(--colour-trim-2);
+}
+
+a:hover {
+  color: var(--colour-trim-3);
+}
