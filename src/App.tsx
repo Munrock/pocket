@@ -1,44 +1,27 @@
-import { useState, useEffect } from 'react'
-import { getPreferences, savePreferences } from './storage'
-import type { ColourScheme } from './storage'
-import './App.css'
-
-function applyTheme(scheme: ColourScheme) {
-  document.documentElement.setAttribute('data-theme', scheme)
-}
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useStore } from './store'
+import FrontView from './views/FrontView'
+import PlayerView from './views/PlayerView'
+import SettingsView from './views/SettingsView'
 
 function App() {
-  const [colourScheme, setColourScheme] = useState<ColourScheme>(() => {
-    const prefs = getPreferences()
-    applyTheme(prefs.colourScheme)
-    return prefs.colourScheme
-  })
+  const colourScheme = useStore((s) => s.colourScheme)
 
   useEffect(() => {
-    applyTheme(colourScheme)
-    savePreferences({ colourScheme })
+    document.documentElement.setAttribute('data-theme', colourScheme)
   }, [colourScheme])
 
   return (
-    <main className="home">
-      <h1 className="home__title">Pocket</h1>
-      <div className="home__controls">
-        <button
-          className={`scheme-btn${colourScheme === 'dark' ? ' scheme-btn--active' : ''}`}
-          onClick={() => setColourScheme('dark')}
-          aria-pressed={colourScheme === 'dark'}
-        >
-          Dark
-        </button>
-        <button
-          className={`scheme-btn${colourScheme === 'light' ? ' scheme-btn--active' : ''}`}
-          onClick={() => setColourScheme('light')}
-          aria-pressed={colourScheme === 'light'}
-        >
-          Light
-        </button>
-      </div>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/front" element={<FrontView />} />
+        <Route path="/settings" element={<SettingsView />} />
+        <Route path="/settings/:videoId" element={<SettingsView />} />
+        <Route path="/:videoId" element={<PlayerView />} />
+        <Route path="*" element={<Navigate to="/front" replace />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

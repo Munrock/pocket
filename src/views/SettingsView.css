@@ -1,0 +1,118 @@
+.settings {
+  min-height: 100svh;
+  background-color: var(--colour-bg-1);
+  padding: 1rem;
+}
+
+.settings__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.settings__back {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--colour-trim-1);
+  border-radius: 0.25rem;
+  background: var(--colour-bg-3);
+  color: var(--colour-text);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.settings__back:hover {
+  background: var(--colour-bg-4);
+}
+
+.settings__title {
+  color: var(--colour-trim-2);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.settings__section {
+  margin-bottom: 1.5rem;
+}
+
+.settings__label {
+  color: var(--colour-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.settings__row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.settings__row--wrap {
+  flex-wrap: wrap;
+}
+
+.settings__opt {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--colour-trim-1);
+  border-radius: 0.25rem;
+  background: var(--colour-bg-3);
+  color: var(--colour-text);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.settings__opt:hover {
+  background: var(--colour-bg-4);
+}
+
+.settings__opt--active {
+  background: var(--colour-trim-1);
+  color: var(--colour-bg-1);
+  border-color: var(--colour-trim-1);
+}
+
+.settings__value {
+  color: var(--colour-trim-2);
+  font-size: 1.25rem;
+  font-weight: 600;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.settings__slider {
+  width: 100%;
+  accent-color: var(--colour-trim-1);
+}
+
+.settings__buttons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.settings__btn-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: var(--colour-bg-2);
+  border-radius: 0.25rem;
+  color: var(--colour-text);
+  font-size: 0.9rem;
+}
+
+.settings__move {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--colour-trim-1);
+  border-radius: 0.25rem;
+  background: var(--colour-bg-3);
+  color: var(--colour-trim-1);
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.settings__move:hover {
+  background: var(--colour-bg-4);
+  color: var(--colour-trim-2);
+}

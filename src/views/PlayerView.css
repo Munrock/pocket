@@ -1,0 +1,117 @@
+.player {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  background-color: var(--colour-bg-1);
+}
+
+.player__video {
+  width: 100%;
+  background: var(--colour-bg-2);
+  overflow: hidden;
+}
+
+.player__youtube {
+  width: 100%;
+  height: 100%;
+}
+
+.player__iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.player__blocked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 1rem;
+  color: var(--colour-warn-1);
+  text-align: center;
+}
+
+.player__blocked a {
+  color: var(--colour-trim-2);
+  text-decoration: underline;
+}
+
+.player__status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  color: var(--colour-trim-1);
+  background: var(--colour-bg-2);
+}
+
+.player__loop-label {
+  color: var(--colour-trim-2);
+}
+
+.player__bookmarks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.player__bookmark-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tile-size);
+  height: calc(var(--tile-size) * 0.5);
+  border: none;
+  margin: 0;
+  padding: 0.25rem;
+  background: var(--colour-bg-3);
+  color: var(--colour-warn-1);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: 1px solid var(--colour-bg-4);
+}
+
+.player__bookmark-btn:active {
+  background: var(--colour-bg-4);
+}
+
+.player__grid {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.player__back {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: var(--colour-bg-2);
+}
+
+.player__back-btn {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--colour-trim-1);
+  border-radius: 0.25rem;
+  background: var(--colour-bg-3);
+  color: var(--colour-text);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.player__back-btn:hover {
+  background: var(--colour-bg-4);
+}
+
+.player__yt-link {
+  color: var(--colour-trim-2);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.player__yt-link:hover {
+  text-decoration: underline;
+}
