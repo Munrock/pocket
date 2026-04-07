@@ -323,7 +323,7 @@ export const useStore = create<PocketState>((set, get) => ({
   getBookmarks: () => {
     const vid = get().currentVideoId
     if (!vid) return []
-    return (get().bookmarksByVideo[vid] ?? []).sort((a, b) => a.time - b.time)
+    return [...(get().bookmarksByVideo[vid] ?? [])].sort((a, b) => a.time - b.time)
   },
 
   addBookmark: (time) => {
