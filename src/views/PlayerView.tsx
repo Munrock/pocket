@@ -305,7 +305,7 @@ export default function PlayerView() {
 
   const opts: YouTubeProps['opts'] = {
     width: '100%',
-    height: tileSize,
+    height: `${tileSize}`,
     playerVars: {
       autoplay: 0,
       controls: 0,
