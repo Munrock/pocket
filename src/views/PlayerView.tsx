@@ -291,7 +291,7 @@ export default function PlayerView() {
             key={id}
             label="Open in YouTube"
             icon="↗"
-            onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank')}
+            onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank', 'noopener,noreferrer')}
           />
         )
       case 'zoomIn':
