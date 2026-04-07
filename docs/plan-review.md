@@ -51,17 +51,29 @@ passages 3 seconds is too long; for slow, complex passages it may be too short.
 **Suggestion:** expose a **pre-roll duration** setting (default 3 s, range
 1–10 s) in Settings alongside tile size.
 
-### 1.4 Loop modes need a clearer mental model
+### 1.4 Loop state model — ✅ clarified
 
-Two overlapping loop concepts are described:
+Both loop buttons (Manual and Auto/Quick) drive the **same underlying loop
+engine**.  The agreed state shape is three values:
 
-- **Auto-loop** — loops between the bookmarks immediately before and after the
-  current playhead.
-- **Set Loop** — user manually selects two bookmarks as start/end points.
+```ts
+looping:   boolean        // whether the looper is currently engaged
+loopStart: Bookmark | null  // earlier boundary
+loopEnd:   Bookmark | null  // later boundary
+```
 
-It is not clear what happens when both are active, or which takes precedence.
-**Suggestion:** make these mutually exclusive and represent them as a single
-`loopMode: 'auto' | 'manual' | 'off'` state value.
+**Manual loop** — user taps "Loop", then taps any two bookmarks on the
+timeline.  The app assigns them to `loopStart`/`loopEnd` by timeline position
+and sets `looping = true`.
+
+**Auto/Quick loop** — user taps "Loop".  The nearest bookmark *before* the
+current playhead becomes `loopStart`; the nearest bookmark *after* becomes
+`loopEnd`.  `looping` is set to `true` immediately.
+
+While `looping` is `true`, **both** the Manual and Auto/Quick buttons become
+**"Clear loop"** buttons (setting `looping = false` and clearing
+`loopStart`/`loopEnd`).  The two modes are therefore mutually exclusive by
+design — engaging one always clears the previous loop.
 
 ### 1.5 "Add / remove timeline rows" is a zoom, not row management
 
@@ -202,7 +214,7 @@ The packages below are the minimum additional dependencies needed.
 ## 4. Suggested implementation order
 
 1. **Routing skeleton** — three routes (Front, Player, Settings) with stub components.
-2. **Zustand store** — define the state shape (preferences, history, favourites, player state, bookmarks, loop state).
+2. **Zustand store** — define the state shape (preferences, history, favourites, player state, bookmarks, loop state: `looping`, `loopStart`, `loopEnd`).
 3. **Front view** — URL input, history list, dark/light toggle.
 4. **Player view** — `react-youtube` embed, timeline, play/pause/seek, bookmarks, speed.
 5. **Loop logic** — auto-loop and manual loop modes.
