@@ -91,6 +91,8 @@ tile-size change must recompute the list.  **Suggestion:** confirm this is the
 intended behaviour and note it explicitly, because it affects how the history
 is queried from storage (it cannot simply be a fixed-length slice).
 
+Clarification: Suggestion 1.6 incorrectly assumes the main UI's tile layout is applied to the front view.  It can use a typical list format suited to a favourites/history listing.  Recomputing the length on size change is unnecessary: this is an edge case given that mobile devicesand tablets usually always have browser windows consistently maximized.  The user can refresh the window if it's absolutely necessary.
+
 ### 1.7 PWA / offline / installability
 
 The use case (musician, one or both hands occupied, possibly in a rehearsal
@@ -128,12 +130,18 @@ video disallows embedding.  Should the app:
 Option (b) requires a network request to
 `https://www.youtube.com/oembed?url=…&format=json` before loading the player.
 
+#### Answer:
+A and B are functionally identical - use whichever option goes easiest on a cheap device's processor, ending with the space where the video would be shown displaying the youtube link.
+
 ### 2.2 Target device / viewport
 
 Is this primarily a **mobile** app (portrait, touch), a **desktop** app
 (landscape, mouse/touch), or fully responsive?  The tile-based layout with
 large buttons strongly implies mobile, but the YouTube player and timeline may
 be more comfortable on a larger screen.
+
+#### Answer:
+Primarily a mobile app.
 
 ### 2.3 Forward/backward skip logic
 
@@ -150,16 +158,27 @@ Or does "closest" mean "jump to the nearest upcoming bookmark if one exists
 within 10 s, otherwise +10 s"?  These produce the same result, but stating it
 unambiguously avoids a bug.
 
+#### Answer:
+
+Forward: Skip the playhead forward to the next bookmark within 10 seconds, or skip the playhead forwards 10 seconds if there are no such bookmarks.
+
 ### 2.4 Bookmark pre-roll: does looping restart the fade?
 
 When the app is looping and crosses a bookmark, does the fade-in reset on
 every pass, or only on the first approach?
+
+#### Answer:
+
+Preroll is for when the musician manually skips to a bookmark or spot on the timeline.  Its purpose is to give them time to reposition from handling the phone/tablet to readying their instrument.  On a loop, preroll at the start when the loop is first established, for the same reason.  On subsequent loops, no preroll.
 
 ### 2.5 Settings: which buttons can be moved?
 
 The plan says users can move buttons between the main UI and the submenu.
 Should there be a minimum set of buttons that are always on the main UI (e.g.
 play/pause is never movable), or is every button freely movable?
+
+#### Answer:
+Everything can be moved except the submenu button itself.
 
 ### 2.6 Persistence scope
 
@@ -170,6 +189,9 @@ Should the video history, favourites, and timestamp bookmarks be:
 
 The current codebase uses `localStorage`.  A backend would significantly
 increase scope.
+
+#### Answer:
+localStorage only.  A backend would indeed increase scope, it adds a whole platform of costs to what's otherwise a single static html/js bundle.
 
 ---
 
