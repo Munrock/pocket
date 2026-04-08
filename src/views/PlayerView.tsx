@@ -15,6 +15,7 @@ export default function PlayerView() {
   const playerRef = useRef<YT.Player | null>(null);
   const timeUpdateRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const preRollFadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const wakeLockRef = useRef<WakeLockSentinel | null>(null);
 
   const tileSize = useStore((s) => s.tileSize);
   const playing = useStore((s) => s.playing);
@@ -75,6 +76,35 @@ export default function PlayerView() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId]);
+
+  // Keep screen awake while playing
+  useEffect(() => {
+    if (!playing) {
+      wakeLockRef.current?.release();
+      wakeLockRef.current = null;
+      return;
+    }
+    let active = true;
+    const acquire = async () => {
+      try {
+        if ("wakeLock" in navigator) {
+          wakeLockRef.current = await navigator.wakeLock.request("screen");
+        }
+      } catch { /* ignore — user navigated away or API unavailable */ }
+    };
+    acquire();
+    // Re-acquire after returning from a background tab
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible" && active) acquire();
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      active = false;
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      wakeLockRef.current?.release();
+      wakeLockRef.current = null;
+    };
+  }, [playing]);
 
   // Sync playback rate to player
   useEffect(() => {
