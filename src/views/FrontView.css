@@ -7,11 +7,33 @@
   padding: 1rem;
 }
 
+.front__logo-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
 .front__logo {
   width: 120px;
   height: 120px;
-  margin: 2rem 0;
   object-fit: contain;
+}
+
+.front__install {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--colour-trim-1);
+  border-radius: 0.375rem;
+  background: var(--colour-bg-3);
+  color: var(--colour-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.front__install:hover {
+  background: var(--colour-trim-1);
+  color: var(--colour-bg-1);
 }
 
 .front__form {

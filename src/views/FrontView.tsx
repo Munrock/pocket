@@ -1,13 +1,34 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../store";
 import { extractVideoId } from "../utils";
 import "./FrontView.css";
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt(): Promise<void>;
+}
+
 export default function FrontView() {
   const [urlInput, setUrlInput] = useState("");
   const [error, setError] = useState("");
+  const [installPrompt, setInstallPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e as BeforeInstallPromptEvent);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const handleInstall = () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    setInstallPrompt(null);
+  };
   const colourScheme = useStore((s) => s.colourScheme);
   const setColourScheme = useStore((s) => s.setColourScheme);
   const videos = useStore((s) => s.videos);
@@ -53,11 +74,18 @@ export default function FrontView() {
 
   return (
     <div className="front">
-      <img
-        src={`${import.meta.env.BASE_URL}icon.png`}
-        alt="Tuback"
-        className="front__logo"
-      />
+      <div className="front__logo-row">
+        <img
+          src={`${import.meta.env.BASE_URL}icon.png`}
+          alt="Tuback"
+          className="front__logo"
+        />
+        {installPrompt && (
+          <button className="front__install" onClick={handleInstall}>
+            Install
+          </button>
+        )}
+      </div>
       <form className="front__form" onSubmit={handleSubmit}>
         <input
           className="front__input"
