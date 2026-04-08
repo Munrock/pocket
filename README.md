@@ -1,4 +1,4 @@
-# Pocket
+# That time I needed to use a YouTube Video as a backing track for practice (tuback)
 
 A mobile-first YouTube playback controller built for musicians. Bookmark passages, loop between markers, adjust speed, and practise hands-free — all from a minimal tile-based UI designed for one-handed use.
 

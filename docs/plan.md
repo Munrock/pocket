@@ -1,4 +1,4 @@
-# Pocket
+# tuback
 
 A web app providing streamlined playback controls of YouTube videos for musicians.
 
@@ -6,10 +6,10 @@ Designed for musicians to listen to and play back YouTube music videos, for play
 
 ## Terminology
 
-| Term | Meaning |
-|---|---|
-| **Favourite** | A saved video (star icon), shown at the top of the Front view list |
-| **Bookmark** | A timestamp marker on the timeline, used for navigation and looping |
+| Term          | Meaning                                                             |
+| ------------- | ------------------------------------------------------------------- |
+| **Favourite** | A saved video (star icon), shown at the top of the Front view list  |
+| **Bookmark**  | A timestamp marker on the timeline, used for navigation and looping |
 
 ## Key Features
 
@@ -41,14 +41,14 @@ The YouTube video takes up one or more tiles depending on its aspect ratio.
 
 Tile size defaults to **1/4 viewport width** (4 tiles across). The viewport width is measured once on initial load and the resulting pixel size is saved to state/localStorage. In Settings the user picks from a set of fractions that always tile evenly:
 
-| Setting label | Fraction | Tiles per row |
-|---|---|---|
-| 2 across | 1/2 vw | 2 |
-| 3 across | 1/3 vw | 3 |
-| 4 across (default) | 1/4 vw | 4 |
-| 5 across | 1/5 vw | 5 |
-| 6 across | 1/6 vw | 6 |
-| 7 across | 1/7 vw | 7 |
+| Setting label      | Fraction | Tiles per row |
+| ------------------ | -------- | ------------- |
+| 2 across           | 1/2 vw   | 2             |
+| 3 across           | 1/3 vw   | 3             |
+| 4 across (default) | 1/4 vw   | 4             |
+| 5 across           | 1/5 vw   | 5             |
+| 6 across           | 1/6 vw   | 6             |
+| 7 across           | 1/7 vw   | 7             |
 
 ### Buttons
 
@@ -59,7 +59,7 @@ Tile size defaults to **1/4 viewport width** (4 tiles across). The viewport widt
 - Remove bookmark closest to the playhead.
 - Speed up — cycles through the YouTube standard playback rates: 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2. Wraps from fastest back to slowest.
 - Slow down — same set of rates, in reverse order. Wraps from slowest back to fastest.
-- Auto Loop — tap to engage. The nearest bookmark *before* the current playhead becomes `loopStart`; the nearest bookmark *after* becomes `loopEnd` (the start and end of the video act as pseudo-bookmarks). Looping begins immediately.
+- Auto Loop — tap to engage. The nearest bookmark _before_ the current playhead becomes `loopStart`; the nearest bookmark _after_ becomes `loopEnd` (the start and end of the video act as pseudo-bookmarks). Looping begins immediately.
 - Manual Loop — tap to engage, then tap two points on the timeline. If a tap lands on or within 2 seconds of an existing bookmark, that bookmark is used. If a tap lands elsewhere, a new bookmark is created at that position and used. The app assigns the two points to `loopStart`/`loopEnd` by timeline position and begins looping.
 - Settings (opens a new UI)
 - Submenu (hides the main buttons and shows the submenu buttons)
@@ -73,9 +73,9 @@ While a loop is active, both the Auto Loop and Manual Loop buttons become **Clea
 #### Loop state model
 
 ```ts
-looping:   boolean          // whether the looper is currently engaged
-loopStart: Bookmark | null  // earlier boundary
-loopEnd:   Bookmark | null  // later boundary
+looping: boolean; // whether the looper is currently engaged
+loopStart: Bookmark | null; // earlier boundary
+loopEnd: Bookmark | null; // later boundary
 ```
 
 ### Button movability
@@ -116,43 +116,43 @@ Shows:
 
 ### Core runtime dependencies
 
-| Package | Version | Reason |
-|---|---|---|
-| `react-youtube` | `^10` | Thin React wrapper around the YouTube IFrame Player API. Provides a ref-accessible player object with the full `YT.Player` interface. No API key required. |
-| `zustand` | `^5` | Lightweight, hook-based state management for cross-component state (bookmarks, loop mode, speed, tile size, button layout). |
-| `react-router-dom` | `^7` | Three distinct views (Front, Player, Settings) need routing. |
+| Package            | Version | Reason                                                                                                                                                     |
+| ------------------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `react-youtube`    | `^10`   | Thin React wrapper around the YouTube IFrame Player API. Provides a ref-accessible player object with the full `YT.Player` interface. No API key required. |
+| `zustand`          | `^5`    | Lightweight, hook-based state management for cross-component state (bookmarks, loop mode, speed, tile size, button layout).                                |
+| `react-router-dom` | `^7`    | Three distinct views (Front, Player, Settings) need routing.                                                                                               |
 
 ### Development dependencies
 
-| Package | Version | Reason |
-|---|---|---|
-| `vite-plugin-pwa` | `^0.21` | PWA support — generates a service worker and web manifest from Vite config. |
-| `@types/youtube` | `^0.0.x` | TypeScript types for the `YT` global injected by the IFrame API. |
+| Package           | Version  | Reason                                                                      |
+| ----------------- | -------- | --------------------------------------------------------------------------- |
+| `vite-plugin-pwa` | `^0.21`  | PWA support — generates a service worker and web manifest from Vite config. |
+| `@types/youtube`  | `^0.0.x` | TypeScript types for the `YT` global injected by the IFrame API.            |
 
 ### Stretch-goal packages
 
-| Package | Reason |
-|---|---|
-| `soundtouch-js` | Pitch-preserving playback speed. Evaluate before committing — Web Audio API adds complexity and may have latency on mobile. |
-| `vitest` + `@testing-library/react` | Unit and component testing. Add when the first non-trivial component is built. |
-| `idb` | Typed IndexedDB wrapper. Upgrade from `localStorage` if bookmarks/history data grows large. |
+| Package                             | Reason                                                                                                                      |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `soundtouch-js`                     | Pitch-preserving playback speed. Evaluate before committing — Web Audio API adds complexity and may have latency on mobile. |
+| `vitest` + `@testing-library/react` | Unit and component testing. Add when the first non-trivial component is built.                                              |
+| `idb`                               | Typed IndexedDB wrapper. Upgrade from `localStorage` if bookmarks/history data grows large.                                 |
 
 ### Packages explicitly not recommended
 
-| Package | Reason to avoid |
-|---|---|
+| Package                                | Reason to avoid                                                                                                                                       |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `@mui/material` / `antd` / `chakra-ui` | The tile-based layout is bespoke; a generic component library would fight the grid and add bloat. CSS Grid + custom properties is the right approach. |
-| `axios` | `fetch` is sufficient for the single oEmbed pre-check call. |
-| `date-fns` / `dayjs` | Time values are plain seconds; no date library is needed. |
+| `axios`                                | `fetch` is sufficient for the single oEmbed pre-check call.                                                                                           |
+| `date-fns` / `dayjs`                   | Time values are plain seconds; no date library is needed.                                                                                             |
 
 ## Routing
 
-| Route | View | Notes |
-|---|---|---|
-| `/front` | Front | Video list, URL input, dark/light toggle |
-| `/settings` | Settings | Standalone (entered from Front) |
+| Route                | View     | Notes                                                                                       |
+| -------------------- | -------- | ------------------------------------------------------------------------------------------- |
+| `/front`             | Front    | Video list, URL input, dark/light toggle                                                    |
+| `/settings`          | Settings | Standalone (entered from Front)                                                             |
 | `/settings/:videoId` | Settings | Entered from Player; `videoId` in the path so the UI can navigate back to the player easily |
-| `/:videoId` | Player | YouTube video ID in the path |
+| `/:videoId`          | Player   | YouTube video ID in the path                                                                |
 
 ## Suggested implementation order
 

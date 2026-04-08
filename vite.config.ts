@@ -9,10 +9,10 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg"],
+      includeAssets: ["icon.png"],
       manifest: {
-        name: "Pocket",
-        short_name: "Pocket",
+        name: "That time I needed to use a YouTube Video as a backing track for practice",
+        short_name: "Tuback",
         description: "Streamlined YouTube playback controls for musicians",
         theme_color: "#0d0f14",
         background_color: "#0d0f14",
@@ -21,9 +21,9 @@ export default defineConfig({
         start_url: "/pocket/front",
         icons: [
           {
-            src: "favicon.svg",
-            sizes: "any",
-            type: "image/svg+xml",
+            src: "icon.png",
+            sizes: "192x192 512x512",
+            type: "image/png",
             purpose: "any",
           },
         ],
