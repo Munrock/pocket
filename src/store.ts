@@ -194,18 +194,71 @@ const initialFraction: TileFraction = saved.tileFraction ?? 4;
 
 const DEFAULT_VIDEOS: VideoEntry[] = [
   {
-    videoId: "ZRDK_3lmmkg",
-    title: "WHIZZ - Dancing Till The End (Official Music Video)",
-    lastPlayed: new Date().toISOString(),
+    videoId: "I5v2lhulp-s",
+    title: "WHIZZ - Let's Keep Dancing Tonight (Official Music Video)",
+    lastPlayed: "2026-04-08T12:22:53.505Z",
     favourite: true,
   },
   {
-    videoId: "I5v2lhulp-s",
-    title: "WHIZZ - Let's Keep Dancing Tonight (Official Music Video)",
-    lastPlayed: new Date().toISOString(),
+    videoId: "ZRDK_3lmmkg",
+    title: "WHIZZ - Dancing Till The End (Official Music Video)",
+    lastPlayed: "2026-04-08T11:09:25.941Z",
     favourite: true,
   },
+  {
+    videoId: "r00ikilDxW4",
+    title: "Green Day - 21 Guns [Official Music Video]",
+    lastPlayed: "2026-04-08T12:13:20.542Z",
+    favourite: true,
+  },
+  {
+    videoId: "dLl4PZtxia8",
+    title: "Eagles - Hotel California (Official Audio)",
+    lastPlayed: "2026-04-08T12:14:17.179Z",
+    favourite: true,
+  },
+  {
+    videoId: "zaHO35c0NPk",
+    title: "AC/DC - Highway To Hell (E Standard Tuning)",
+    lastPlayed: "2026-04-08T12:21:18.228Z",
+    favourite: true,
+  },
+  {
+    videoId: "PRjUrpMCElQ",
+    title: "Fairy Tail 2014 OST - Track 01: Fairy Tail Main Theme 2014",
+    lastPlayed: "2026-04-08T12:12:23.825Z",
+    favourite: false,
+  },
+  {
+    videoId: "-eVncZfY9m0",
+    title: "SRV SLOW BLUES Backing Track in A - The BEST Jam Session",
+    lastPlayed: "2026-04-08T12:09:46.836Z",
+    favourite: false,
+  },
+  {
+    videoId: "lFV6mqP7rfY",
+    title: "Blues Shuffle in A",
+    lastPlayed: "2026-04-08T12:08:40.498Z",
+    favourite: false,
+  },
+  {
+    videoId: "dChOc19CENU",
+    title: "BB King Style Blues Backing Track in A Minor 105 bpm",
+    lastPlayed: "2026-04-08T12:07:59.344Z",
+    favourite: false,
+  },
 ];
+
+const DEFAULT_BOOKMARKS: Record<string, Bookmark[]> = {
+  zaHO35c0NPk: [
+    { id: "vtnq1qvc", time: 129.1 },
+    { id: "2gxcpx8b", time: 155.7 },
+  ],
+  "I5v2lhulp-s": [
+    { id: "m7njzwy1", time: 112.4 },
+    { id: "ci4ci76b", time: 163.8 },
+  ],
+};
 
 export const useStore = create<PocketState>((set, get) => ({
   /* Preferences */
@@ -230,7 +283,7 @@ export const useStore = create<PocketState>((set, get) => ({
   embedBlocked: false,
 
   /* Bookmarks */
-  bookmarksByVideo: saved.bookmarksByVideo ?? {},
+  bookmarksByVideo: saved.bookmarksByVideo ?? DEFAULT_BOOKMARKS,
 
   /* Loop */
   looping: false,
