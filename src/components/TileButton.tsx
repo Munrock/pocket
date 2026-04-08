@@ -25,6 +25,7 @@ export default function TileButton({
         {
           width: tileSize,
           height: tileSize,
+          flexGrow: 1,
           "--tile-size": `${tileSize}px`,
         } as React.CSSProperties
       }

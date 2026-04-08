@@ -180,7 +180,7 @@ function persist(state: PocketState) {
 }
 
 function computeTileSize(fraction: TileFraction): number {
-  return window.innerWidth / fraction;
+  return window.innerWidth / fraction - 5;
 }
 
 function makeId(): string {
