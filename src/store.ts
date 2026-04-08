@@ -256,8 +256,9 @@ export const useStore = create<PocketState>((set, get) => ({
 
   /* Video history */
   addVideo: (videoId, title) => {
-    const videos = get().videos.filter((v) => v.videoId !== videoId)
-    const existing = get().videos.find((v) => v.videoId === videoId)
+    const currentVideos = get().videos
+    const existing = currentVideos.find((v) => v.videoId === videoId)
+    const videos = currentVideos.filter((v) => v.videoId !== videoId)
     const entry: VideoEntry = {
       videoId,
       title: title || videoId,
