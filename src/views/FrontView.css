@@ -85,6 +85,29 @@
   width: 100%;
 }
 
+.front__tabs {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.front__tab {
+  flex: 1;
+  padding: 0.5rem 0;
+  border: none;
+  border-bottom: 2px solid var(--colour-bg-3);
+  background: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.15s, border-color 0.15s;
+}
+
+.front__tab--active {
+  opacity: 1;
+  border-bottom-color: var(--colour-trim-1);
+}
+
 .front__list {
   flex: 1;
   width: 100%;

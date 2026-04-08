@@ -64,6 +64,7 @@ export default function PlayerView() {
   useEffect(() => {
     if (videoId) {
       setCurrentVideoId(videoId);
+      setPlaying(false);
       setEmbedBlocked(false);
       closeSubmenu();
       isFirstLoopIteration.current = true;
@@ -328,7 +329,7 @@ export default function PlayerView() {
           <TileButton
             key={id}
             label="Add Bookmark"
-            icon="🔖"
+            icon="➕🏷️"
             onClick={() => addBookmark(currentTime)}
           />
         );
@@ -337,7 +338,7 @@ export default function PlayerView() {
           <TileButton
             key={id}
             label="Remove Bookmark"
-            icon="✖"
+            icon="✖🏷️"
             onClick={() => removeBookmarkNearTime(currentTime)}
           />
         );
@@ -399,7 +400,7 @@ export default function PlayerView() {
           <TileButton
             key={id}
             label="Menu"
-            icon={submenuOpen ? "✕" : "☰"}
+            icon="☰"
             active={submenuOpen}
             onClick={toggleSubmenu}
           />

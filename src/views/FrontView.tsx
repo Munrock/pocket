@@ -8,12 +8,26 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
+const TAB_KEY = "pocket_front_tab";
+type Tab = "history" | "favourites";
+
+function loadTab(): Tab {
+  const v = localStorage.getItem(TAB_KEY);
+  return v === "favourites" ? "favourites" : "history";
+}
+
 export default function FrontView() {
   const [urlInput, setUrlInput] = useState("");
   const [error, setError] = useState("");
+  const [tab, setTabState] = useState<Tab>(loadTab);
   const [installPrompt, setInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const navigate = useNavigate();
+
+  const setTab = (t: Tab) => {
+    setTabState(t);
+    localStorage.setItem(TAB_KEY, t);
+  };
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -69,8 +83,10 @@ export default function FrontView() {
     }
   };
 
-  const favourites = videos.filter((v) => v.favourite);
-  const history = videos.filter((v) => !v.favourite);
+  const visibleVideos =
+    tab === "favourites"
+      ? videos.filter((v) => v.favourite)
+      : videos.filter((v) => !v.favourite);
 
   return (
     <div className="front">
@@ -104,11 +120,32 @@ export default function FrontView() {
       </form>
       {error && <p className="front__error">{error}</p>}
 
+      <div className="front__tabs" role="tablist">
+        <button
+          className={`front__tab${tab === "history" ? " front__tab--active" : ""}`}
+          role="tab"
+          aria-selected={tab === "history"}
+          aria-label="History"
+          onClick={() => setTab("history")}
+        >
+          🕓
+        </button>
+        <button
+          className={`front__tab${tab === "favourites" ? " front__tab--active" : ""}`}
+          role="tab"
+          aria-selected={tab === "favourites"}
+          aria-label="Favourites"
+          onClick={() => setTab("favourites")}
+        >
+          ⭐
+        </button>
+      </div>
+
       <div className="front__list">
-        {favourites.map((v) => (
+        {visibleVideos.map((v) => (
           <button
             key={v.videoId}
-            className="front__item front__item--fav"
+            className={`front__item${v.favourite ? " front__item--fav" : ""}`}
             onClick={() => handleVideoClick(v.videoId)}
             onTouchStart={() => handleTouchStart(v.videoId)}
             onTouchEnd={handleTouchEnd}
@@ -117,23 +154,9 @@ export default function FrontView() {
               toggleFavourite(v.videoId);
             }}
           >
-            <span className="front__star">★</span>
-            <span className="front__title">{v.title}</span>
-          </button>
-        ))}
-        {history.map((v) => (
-          <button
-            key={v.videoId}
-            className="front__item"
-            onClick={() => handleVideoClick(v.videoId)}
-            onTouchStart={() => handleTouchStart(v.videoId)}
-            onTouchEnd={handleTouchEnd}
-            onContextMenu={(e) => {
-              e.preventDefault();
-              toggleFavourite(v.videoId);
-            }}
-          >
-            <span className="front__star front__star--empty">☆</span>
+            <span className={`front__star${v.favourite ? "" : " front__star--empty"}`}>
+              {v.favourite ? "★" : "☆"}
+            </span>
             <span className="front__title">{v.title}</span>
           </button>
         ))}
