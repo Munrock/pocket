@@ -1,73 +1,39 @@
-# React + TypeScript + Vite
+# Pocket
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A mobile-first YouTube playback controller built for musicians. Bookmark passages, loop between markers, adjust speed, and practise hands-free — all from a minimal tile-based UI designed for one-handed use.
 
-Currently, two official plugins are available:
+**Live:** [munrock.github.io/pocket](https://munrock.github.io/pocket/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Bookmarks** — tap to place timestamp markers on any video; snap-to nearest within 2 s
+- **Looping** — auto-loop between the two closest bookmarks, or tap the timeline twice for a manual loop
+- **Pre-roll** — configurable 1–10 s volume fade-in when jumping to a bookmark, so you hear the lead-in
+- **Speed control** — 0.25×–2× playback rate
+- **Timeline** — zoomable multi-row timeline showing bookmarks and loop regions
+- **Customisable grid** — rearrange buttons between the main view and a submenu; set tile size (2–7 across)
+- **Dark / light theme**
+- **Installable PWA** — works offline (except YouTube streaming itself); add to home screen on mobile or install on desktop
+- **No backend** — all data persists in localStorage
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+React 19 · React Router 7 · Zustand 5 · Vite 8 · TypeScript · vite-plugin-pwa
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev        # http://localhost:5173/
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Deploy to GitHub Pages
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npx gh-pages -d dist
 ```
+
+## Licence
+
+[MIT](LICENSE)

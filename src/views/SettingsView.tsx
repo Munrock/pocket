@@ -28,6 +28,7 @@ const BUTTON_LABELS: Record<ButtonId, string> = {
   openYouTube: 'Open in YouTube',
   zoomIn: 'Zoom In',
   zoomOut: 'Zoom Out',
+  back: 'Back',
 }
 
 export default function SettingsView() {
