@@ -193,9 +193,19 @@ const saved = loadPersisted();
 const initialFraction: TileFraction = saved.tileFraction ?? 4;
 
 const DEFAULT_VIDEOS: VideoEntry[] = [
-  { videoId: 'ZRDK_3lmmkg', title: 'ZRDK_3lmmkg', lastPlayed: new Date().toISOString(), favourite: true },
-  { videoId: 'I5v2lhulp-s', title: 'I5v2lhulp-s', lastPlayed: new Date().toISOString(), favourite: true },
-]
+  {
+    videoId: "ZRDK_3lmmkg",
+    title: "WHIZZ - Dancing Till The End (Official Music Video)",
+    lastPlayed: new Date().toISOString(),
+    favourite: true,
+  },
+  {
+    videoId: "I5v2lhulp-s",
+    title: "WHIZZ - Let's Keep Dancing Tonight (Official Music Video)",
+    lastPlayed: new Date().toISOString(),
+    favourite: true,
+  },
+];
 
 export const useStore = create<PocketState>((set, get) => ({
   /* Preferences */
@@ -208,7 +218,8 @@ export const useStore = create<PocketState>((set, get) => ({
   submenuButtons: saved.submenuButtons ?? DEFAULT_SUBMENU_BUTTONS,
 
   /* Video history */
-  videos: saved.videos && saved.videos.length > 0 ? saved.videos : DEFAULT_VIDEOS,
+  videos:
+    saved.videos && saved.videos.length > 0 ? saved.videos : DEFAULT_VIDEOS,
 
   /* Player (transient) */
   currentVideoId: null,
