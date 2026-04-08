@@ -421,7 +421,7 @@ export default function PlayerView() {
             label="Open in YouTube"
             iconNode={
               <img
-                src="/yt_icon_red_digital.png"
+                src={`${import.meta.env.BASE_URL}yt_icon_red_digital.png`}
                 alt="YouTube"
                 className="tile-btn__img"
               />

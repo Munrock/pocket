@@ -1,68 +1,78 @@
-import { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useStore } from '../store'
-import { extractVideoId } from '../utils'
-import './FrontView.css'
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useStore } from "../store";
+import { extractVideoId } from "../utils";
+import "./FrontView.css";
 
 export default function FrontView() {
-  const [urlInput, setUrlInput] = useState('')
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
-  const colourScheme = useStore((s) => s.colourScheme)
-  const setColourScheme = useStore((s) => s.setColourScheme)
-  const videos = useStore((s) => s.videos)
-  const toggleFavourite = useStore((s) => s.toggleFavourite)
-  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const longPressTriggered = useRef(false)
+  const [urlInput, setUrlInput] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const colourScheme = useStore((s) => s.colourScheme);
+  const setColourScheme = useStore((s) => s.setColourScheme);
+  const videos = useStore((s) => s.videos);
+  const toggleFavourite = useStore((s) => s.toggleFavourite);
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const longPressTriggered = useRef(false);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const videoId = extractVideoId(urlInput)
+    e.preventDefault();
+    const videoId = extractVideoId(urlInput);
     if (videoId) {
-      setError('')
-      setUrlInput('')
-      navigate(`/${videoId}`)
+      setError("");
+      setUrlInput("");
+      navigate(`/${videoId}`);
     } else {
-      setError('Invalid YouTube URL or video ID')
+      setError("Invalid YouTube URL or video ID");
     }
-  }
+  };
 
   const handleVideoClick = (videoId: string) => {
     if (!longPressTriggered.current) {
-      navigate(`/${videoId}`)
+      navigate(`/${videoId}`);
     }
-  }
+  };
 
   const handleTouchStart = (videoId: string) => {
-    longPressTriggered.current = false
+    longPressTriggered.current = false;
     longPressTimer.current = setTimeout(() => {
-      longPressTriggered.current = true
-      toggleFavourite(videoId)
-    }, 500)
-  }
+      longPressTriggered.current = true;
+      toggleFavourite(videoId);
+    }, 500);
+  };
 
   const handleTouchEnd = () => {
     if (longPressTimer.current) {
-      clearTimeout(longPressTimer.current)
-      longPressTimer.current = null
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
     }
-  }
+  };
 
-  const favourites = videos.filter((v) => v.favourite)
-  const history = videos.filter((v) => !v.favourite)
+  const favourites = videos.filter((v) => v.favourite);
+  const history = videos.filter((v) => !v.favourite);
 
   return (
     <div className="front">
+      <img
+        src={`${import.meta.env.BASE_URL}icon.png`}
+        alt="Tuback"
+        className="front__logo"
+      />
       <form className="front__form" onSubmit={handleSubmit}>
         <input
           className="front__input"
           type="text"
           placeholder="Paste YouTube link or video ID"
           value={urlInput}
-          onChange={(e) => { setUrlInput(e.target.value); setError('') }}
+          onChange={(e) => {
+            setUrlInput(e.target.value);
+            setError("");
+          }}
           autoComplete="off"
         />
-        <button className="front__go" type="submit">Go</button>
+        <button className="front__go" type="submit">
+          Go
+        </button>
       </form>
       {error && <p className="front__error">{error}</p>}
 
@@ -74,7 +84,10 @@ export default function FrontView() {
             onClick={() => handleVideoClick(v.videoId)}
             onTouchStart={() => handleTouchStart(v.videoId)}
             onTouchEnd={handleTouchEnd}
-            onContextMenu={(e) => { e.preventDefault(); toggleFavourite(v.videoId) }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              toggleFavourite(v.videoId);
+            }}
           >
             <span className="front__star">★</span>
             <span className="front__title">{v.title}</span>
@@ -87,7 +100,10 @@ export default function FrontView() {
             onClick={() => handleVideoClick(v.videoId)}
             onTouchStart={() => handleTouchStart(v.videoId)}
             onTouchEnd={handleTouchEnd}
-            onContextMenu={(e) => { e.preventDefault(); toggleFavourite(v.videoId) }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              toggleFavourite(v.videoId);
+            }}
           >
             <span className="front__star front__star--empty">☆</span>
             <span className="front__title">{v.title}</span>
@@ -97,13 +113,15 @@ export default function FrontView() {
 
       <div className="front__footer">
         <button
-          className={`scheme-toggle${colourScheme === 'dark' ? ' scheme-toggle--active' : ''}`}
-          onClick={() => setColourScheme(colourScheme === 'dark' ? 'light' : 'dark')}
+          className={`scheme-toggle${colourScheme === "dark" ? " scheme-toggle--active" : ""}`}
+          onClick={() =>
+            setColourScheme(colourScheme === "dark" ? "light" : "dark")
+          }
           aria-label="Toggle colour scheme"
         >
-          {colourScheme === 'dark' ? '☀️' : '🌙'}
+          {colourScheme === "dark" ? "☀️" : "🌙"}
         </button>
       </div>
     </div>
-  )
+  );
 }
