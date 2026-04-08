@@ -236,15 +236,18 @@ export default function PlayerView() {
       (a, b) => a.time - b.time,
     );
     const time = currentTime;
-    // Find next bookmark within 10s
-    const next = bms.find((b) => b.time > time && b.time <= time + 10);
+    // Find next bookmark within 10s, but skip any closer than the pre-roll
+    // duration to avoid re-triggering the pre-roll we're already in.
+    const next = bms.find(
+      (b) => b.time > time + preRollDuration && b.time <= time + 10,
+    );
     if (next) {
       seekWithPreRoll(next.time);
     } else {
       const newTime = Math.min(time + 10, duration);
       playerRef.current?.seekTo(newTime, true);
     }
-  }, [currentTime, duration, seekWithPreRoll]);
+  }, [currentTime, duration, preRollDuration, seekWithPreRoll]);
 
   const handleBackward = useCallback(() => {
     const { currentVideoId: vid, bookmarksByVideo } = useStore.getState();
