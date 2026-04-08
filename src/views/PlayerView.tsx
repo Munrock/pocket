@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import YouTube from 'react-youtube'
 import type { YouTubeEvent, YouTubeProps } from 'react-youtube'
@@ -30,6 +30,7 @@ export default function PlayerView() {
   const mainButtons = useStore((s) => s.mainButtons)
   const submenuButtons = useStore((s) => s.submenuButtons)
   const manualLoopPicking = useStore((s) => s.manualLoopPicking)
+  const timelineRows = useStore((s) => s.timelineRows)
 
   const setCurrentVideoId = useStore((s) => s.setCurrentVideoId)
   const setPlaying = useStore((s) => s.setPlaying)
@@ -47,6 +48,7 @@ export default function PlayerView() {
   const toggleSubmenu = useStore((s) => s.toggleSubmenu)
   const closeSubmenu = useStore((s) => s.closeSubmenu)
   const toggleFavourite = useStore((s) => s.toggleFavourite)
+  const setTimelineRows = useStore((s) => s.setTimelineRows)
   const getBookmarks = useStore((s) => s.getBookmarks)
   const handleManualLoopTap = useStore((s) => s.handleManualLoopTap)
 
@@ -123,8 +125,7 @@ export default function PlayerView() {
     }
 
     startTimeUpdater()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videoId, startTimeUpdater, setDuration, addVideo])
+  }, [videoId, playbackRate, startTimeUpdater, setDuration, addVideo])
 
   const onStateChange = useCallback((e: YouTubeEvent<number>) => {
     const state = e.data
@@ -296,9 +297,9 @@ export default function PlayerView() {
           />
         )
       case 'zoomIn':
-        return <TileButton key={id} label="Zoom In" icon="🔍+" onClick={() => useStore.getState().setTimelineRows(useStore.getState().timelineRows + 1)} />
+        return <TileButton key={id} label="Zoom In" icon="🔍+" onClick={() => setTimelineRows(timelineRows + 1)} />
       case 'zoomOut':
-        return <TileButton key={id} label="Zoom Out" icon="🔍−" onClick={() => useStore.getState().setTimelineRows(Math.max(1, useStore.getState().timelineRows - 1))} />
+        return <TileButton key={id} label="Zoom Out" icon="🔍−" onClick={() => setTimelineRows(Math.max(1, timelineRows - 1))} />
       default:
         return null
     }
@@ -316,6 +317,7 @@ export default function PlayerView() {
   }
 
   const visibleButtons = submenuOpen ? submenuButtons : mainButtons
+  const bookmarks = useMemo(() => getBookmarks(), [getBookmarks])
 
   return (
     <div className="player">
@@ -347,9 +349,9 @@ export default function PlayerView() {
       <Timeline onSeek={handleSeek} />
 
       {/* Bookmark buttons */}
-      {getBookmarks().length > 0 && (
+      {bookmarks.length > 0 && (
         <div className="player__bookmarks" style={{ '--tile-size': `${tileSize}px` } as React.CSSProperties}>
-          {getBookmarks().map((b) => (
+          {bookmarks.map((b) => (
             <button
               key={b.id}
               className="player__bookmark-btn"
