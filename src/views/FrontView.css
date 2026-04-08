@@ -55,7 +55,7 @@
 }
 
 .front__input::placeholder {
-  color: var(--colour-bg-4);
+  color: var(--colour-bg-5);
 }
 
 .front__input:focus {

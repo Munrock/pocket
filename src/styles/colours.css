@@ -27,6 +27,7 @@
   --colour-bg-2:   #141720;
   --colour-bg-3:   #1c2030;
   --colour-bg-4:   #252a3a;
+  --colour-bg-5:   #5a6278;
 }
 
 /* ── Light mode ──────────────────────────────────────────────────── */
@@ -44,4 +45,5 @@
   --colour-bg-2:   #f0f4f8;
   --colour-bg-3:   #dde4ed;
   --colour-bg-4:   #ccd5e2;
+  --colour-bg-5:   #7a849a;
 }
