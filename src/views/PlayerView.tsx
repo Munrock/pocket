@@ -346,7 +346,7 @@ export default function PlayerView() {
           <TileButton
             key={id}
             label={`Speed Up (${playbackRate}×)`}
-            icon={`${playbackRate}× ▲`}
+            icon={`${playbackRate}🚄`}
             onClick={speedUp}
           />
         );
@@ -355,7 +355,7 @@ export default function PlayerView() {
           <TileButton
             key={id}
             label={`Slow Down (${playbackRate}×)`}
-            icon={`${playbackRate}× ▼`}
+            icon={`${playbackRate}🚂`}
             onClick={slowDown}
           />
         );
@@ -364,7 +364,7 @@ export default function PlayerView() {
           <TileButton
             key={id}
             label={looping ? "Clear Loop" : "Auto Loop"}
-            icon={looping ? "⏹" : "🔁"}
+            icon={looping ? "❌🔁" : "⚡🔁"}
             active={looping}
             onClick={handleAutoLoop}
           />
@@ -380,7 +380,7 @@ export default function PlayerView() {
                   ? "Picking…"
                   : "Manual Loop"
             }
-            icon={looping ? "⏹" : manualLoopPicking ? "👆" : "🔂"}
+            icon={looping ? "❌🔁" : manualLoopPicking ? "👆" : "🔧🔁"}
             active={looping || manualLoopPicking}
             onClick={handleManualLoop}
           />
@@ -419,7 +419,13 @@ export default function PlayerView() {
           <TileButton
             key={id}
             label="Open in YouTube"
-            icon="↗"
+            iconNode={
+              <img
+                src="/yt_icon_red_digital.png"
+                alt="YouTube"
+                className="tile-btn__img"
+              />
+            }
             onClick={() =>
               window.open(
                 `https://www.youtube.com/watch?v=${videoId}`,
@@ -427,6 +433,15 @@ export default function PlayerView() {
                 "noopener,noreferrer",
               )
             }
+          />
+        );
+      case "back":
+        return (
+          <TileButton
+            key={id}
+            label="Back"
+            icon="←"
+            onClick={() => navigate("/front")}
           />
         );
       case "zoomIn":
@@ -463,7 +478,9 @@ export default function PlayerView() {
     },
   };
 
-  const visibleButtons = submenuOpen ? submenuButtons : mainButtons;
+  const visibleButtons = submenuOpen
+    ? [...submenuButtons.filter((b) => b !== "submenu"), "submenu" as ButtonId]
+    : mainButtons;
   const bookmarks = [...(bookmarksByVideo[currentVideoId ?? ""] ?? [])].sort(
     (a, b) => a.time - b.time,
   );
@@ -537,20 +554,6 @@ export default function PlayerView() {
         style={{ "--tile-size": `${tileSize}px` } as React.CSSProperties}
       >
         {visibleButtons.map(renderButton)}
-      </div>
-
-      <div className="player__back">
-        <button className="player__back-btn" onClick={() => navigate("/front")}>
-          ← Back
-        </button>
-        <a
-          className="player__yt-link"
-          href={`https://www.youtube.com/watch?v=${videoId}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Watch on YouTube
-        </a>
       </div>
     </div>
   );

@@ -1,161 +1,163 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
 /* ─── Types ───────────────────────────────────────────────────────── */
 
-export type ColourScheme = 'dark' | 'light'
+export type ColourScheme = "dark" | "light";
 
 export interface Bookmark {
   /** Unique id */
-  id: string
+  id: string;
   /** Time in seconds */
-  time: number
+  time: number;
 }
 
 export interface VideoEntry {
-  videoId: string
-  title: string
+  videoId: string;
+  title: string;
   /** ISO timestamp of last play */
-  lastPlayed: string
-  favourite: boolean
+  lastPlayed: string;
+  favourite: boolean;
 }
 
-export type TileFraction = 2 | 3 | 4 | 5 | 6 | 7
+export type TileFraction = 2 | 3 | 4 | 5 | 6 | 7;
 
 /** IDs of all available buttons the user can place in main or submenu */
 export type ButtonId =
-  | 'playPause'
-  | 'forward'
-  | 'backward'
-  | 'addBookmark'
-  | 'removeBookmark'
-  | 'speedUp'
-  | 'slowDown'
-  | 'autoLoop'
-  | 'manualLoop'
-  | 'settings'
-  | 'submenu'
-  | 'favourite'
-  | 'openYouTube'
-  | 'zoomIn'
-  | 'zoomOut'
+  | "playPause"
+  | "forward"
+  | "backward"
+  | "addBookmark"
+  | "removeBookmark"
+  | "speedUp"
+  | "slowDown"
+  | "autoLoop"
+  | "manualLoop"
+  | "settings"
+  | "submenu"
+  | "favourite"
+  | "openYouTube"
+  | "zoomIn"
+  | "zoomOut"
+  | "back";
 
 export const DEFAULT_MAIN_BUTTONS: ButtonId[] = [
-  'playPause',
-  'forward',
-  'backward',
-  'addBookmark',
-  'removeBookmark',
-  'speedUp',
-  'slowDown',
-  'autoLoop',
-  'manualLoop',
-  'settings',
-  'submenu',
-]
+  "playPause",
+  "forward",
+  "backward",
+  "addBookmark",
+  "removeBookmark",
+  "autoLoop",
+  "manualLoop",
+  "back",
+  "submenu",
+];
 
 export const DEFAULT_SUBMENU_BUTTONS: ButtonId[] = [
-  'favourite',
-  'openYouTube',
-  'zoomIn',
-  'zoomOut',
-]
+  "settings",
+  "speedUp",
+  "slowDown",
+  "favourite",
+  "openYouTube",
+];
 
-export const PLAYBACK_RATES = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] as const
+export const PLAYBACK_RATES = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] as const;
 
 /* ─── State shape ─────────────────────────────────────────────────── */
 
 export interface PocketState {
   /* Preferences */
-  colourScheme: ColourScheme
-  tileFraction: TileFraction
-  tileSize: number
-  preRollDuration: number
-  timelineRows: number
-  mainButtons: ButtonId[]
-  submenuButtons: ButtonId[]
+  colourScheme: ColourScheme;
+  tileFraction: TileFraction;
+  tileSize: number;
+  preRollDuration: number;
+  timelineRows: number;
+  mainButtons: ButtonId[];
+  submenuButtons: ButtonId[];
 
   /* Video history */
-  videos: VideoEntry[]
+  videos: VideoEntry[];
 
   /* Player state (transient) */
-  currentVideoId: string | null
-  playing: boolean
-  currentTime: number
-  duration: number
-  playbackRate: number
-  embedBlocked: boolean
+  currentVideoId: string | null;
+  playing: boolean;
+  currentTime: number;
+  duration: number;
+  playbackRate: number;
+  embedBlocked: boolean;
 
   /* Bookmarks (per-video, keyed by videoId) */
-  bookmarksByVideo: Record<string, Bookmark[]>
+  bookmarksByVideo: Record<string, Bookmark[]>;
 
   /* Loop */
-  looping: boolean
-  loopStart: Bookmark | null
-  loopEnd: Bookmark | null
+  looping: boolean;
+  loopStart: Bookmark | null;
+  loopEnd: Bookmark | null;
 
   /* Manual-loop picking state */
-  manualLoopPicking: boolean
-  manualLoopFirstPoint: number | null
+  manualLoopPicking: boolean;
+  manualLoopFirstPoint: number | null;
 
   /* Submenu visibility */
-  submenuOpen: boolean
+  submenuOpen: boolean;
 
   /* Actions */
-  setColourScheme: (scheme: ColourScheme) => void
-  setTileFraction: (f: TileFraction) => void
-  setPreRollDuration: (d: number) => void
-  setTimelineRows: (r: number) => void
-  setMainButtons: (ids: ButtonId[]) => void
-  setSubmenuButtons: (ids: ButtonId[]) => void
+  setColourScheme: (scheme: ColourScheme) => void;
+  setTileFraction: (f: TileFraction) => void;
+  setPreRollDuration: (d: number) => void;
+  setTimelineRows: (r: number) => void;
+  setMainButtons: (ids: ButtonId[]) => void;
+  setSubmenuButtons: (ids: ButtonId[]) => void;
 
-  addVideo: (videoId: string, title: string) => void
-  toggleFavourite: (videoId: string) => void
-  removeVideo: (videoId: string) => void
+  addVideo: (videoId: string, title: string) => void;
+  toggleFavourite: (videoId: string) => void;
+  removeVideo: (videoId: string) => void;
 
-  setCurrentVideoId: (id: string | null) => void
-  setPlaying: (p: boolean) => void
-  setCurrentTime: (t: number) => void
-  setDuration: (d: number) => void
-  setPlaybackRate: (r: number) => void
-  setEmbedBlocked: (b: boolean) => void
-  speedUp: () => void
-  slowDown: () => void
+  setCurrentVideoId: (id: string | null) => void;
+  setPlaying: (p: boolean) => void;
+  setCurrentTime: (t: number) => void;
+  setDuration: (d: number) => void;
+  setPlaybackRate: (r: number) => void;
+  setEmbedBlocked: (b: boolean) => void;
+  speedUp: () => void;
+  slowDown: () => void;
 
-  getBookmarks: () => Bookmark[]
-  addBookmark: (time: number) => void
-  removeBookmarkNearTime: (time: number) => void
+  getBookmarks: () => Bookmark[];
+  addBookmark: (time: number) => void;
+  removeBookmarkNearTime: (time: number) => void;
 
-  engageAutoLoop: () => void
-  engageManualLoop: () => void
-  handleManualLoopTap: (time: number) => void
-  clearLoop: () => void
+  engageAutoLoop: () => void;
+  engageManualLoop: () => void;
+  handleManualLoopTap: (time: number) => void;
+  clearLoop: () => void;
 
-  toggleSubmenu: () => void
-  closeSubmenu: () => void
+  toggleSubmenu: () => void;
+  closeSubmenu: () => void;
 }
 
 /* ─── LocalStorage helpers ────────────────────────────────────────── */
 
-const STORAGE_KEY = 'pocket_state'
+const STORAGE_KEY = "pocket_state";
 
 interface PersistedState {
-  colourScheme: ColourScheme
-  tileFraction: TileFraction
-  tileSize: number
-  preRollDuration: number
-  timelineRows: number
-  mainButtons: ButtonId[]
-  submenuButtons: ButtonId[]
-  videos: VideoEntry[]
-  bookmarksByVideo: Record<string, Bookmark[]>
+  colourScheme: ColourScheme;
+  tileFraction: TileFraction;
+  tileSize: number;
+  preRollDuration: number;
+  timelineRows: number;
+  mainButtons: ButtonId[];
+  submenuButtons: ButtonId[];
+  videos: VideoEntry[];
+  bookmarksByVideo: Record<string, Bookmark[]>;
 }
 
 function loadPersisted(): Partial<PersistedState> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) return JSON.parse(raw) as Partial<PersistedState>
-  } catch { /* ignore */ }
-  return {}
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw) as Partial<PersistedState>;
+  } catch {
+    /* ignore */
+  }
+  return {};
 }
 
 function persist(state: PocketState) {
@@ -169,28 +171,30 @@ function persist(state: PocketState) {
     submenuButtons: state.submenuButtons,
     videos: state.videos,
     bookmarksByVideo: state.bookmarksByVideo,
-  }
+  };
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-  } catch { /* ignore */ }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    /* ignore */
+  }
 }
 
 function computeTileSize(fraction: TileFraction): number {
-  return Math.floor(window.innerWidth / fraction)
+  return window.innerWidth / fraction;
 }
 
 function makeId(): string {
-  return Math.random().toString(36).slice(2, 10)
+  return Math.random().toString(36).slice(2, 10);
 }
 
 /* ─── Store ───────────────────────────────────────────────────────── */
 
-const saved = loadPersisted()
-const initialFraction: TileFraction = saved.tileFraction ?? 4
+const saved = loadPersisted();
+const initialFraction: TileFraction = saved.tileFraction ?? 4;
 
 export const useStore = create<PocketState>((set, get) => ({
   /* Preferences */
-  colourScheme: saved.colourScheme ?? 'dark',
+  colourScheme: saved.colourScheme ?? "dark",
   tileFraction: initialFraction,
   tileSize: computeTileSize(initialFraction),
   preRollDuration: saved.preRollDuration ?? 3,
@@ -225,76 +229,79 @@ export const useStore = create<PocketState>((set, get) => ({
   /* ── Actions ──────────────────────────────────────────────────── */
 
   setColourScheme: (scheme) => {
-    set({ colourScheme: scheme })
-    persist(get())
+    set({ colourScheme: scheme });
+    persist(get());
   },
 
   setTileFraction: (f) => {
-    set({ tileFraction: f, tileSize: computeTileSize(f) })
-    persist(get())
+    set({ tileFraction: f, tileSize: computeTileSize(f) });
+    persist(get());
   },
 
   setPreRollDuration: (d) => {
-    set({ preRollDuration: Math.max(1, Math.min(10, d)) })
-    persist(get())
+    set({ preRollDuration: Math.max(1, Math.min(10, d)) });
+    persist(get());
   },
 
   setTimelineRows: (r) => {
-    set({ timelineRows: Math.max(1, r) })
-    persist(get())
+    set({ timelineRows: Math.max(1, r) });
+    persist(get());
   },
 
   setMainButtons: (ids) => {
-    set({ mainButtons: ids })
-    persist(get())
+    set({ mainButtons: ids });
+    persist(get());
   },
 
   setSubmenuButtons: (ids) => {
-    set({ submenuButtons: ids })
-    persist(get())
+    set({ submenuButtons: ids });
+    persist(get());
   },
 
   /* Video history */
   addVideo: (videoId, title) => {
-    const currentVideos = get().videos
-    const existing = currentVideos.find((v) => v.videoId === videoId)
-    const videos = currentVideos.filter((v) => v.videoId !== videoId)
+    const currentVideos = get().videos;
+    const existing = currentVideos.find((v) => v.videoId === videoId);
+    const videos = currentVideos.filter((v) => v.videoId !== videoId);
     const entry: VideoEntry = {
       videoId,
       title: title || videoId,
       lastPlayed: new Date().toISOString(),
       favourite: existing?.favourite ?? false,
-    }
-    videos.unshift(entry)
+    };
+    videos.unshift(entry);
     // Keep max 26 non-favourite entries + all favourites
-    const favourites = videos.filter((v) => v.favourite)
-    const history = videos.filter((v) => !v.favourite).slice(0, 26)
-    set({ videos: [...favourites, ...history] })
-    persist(get())
+    const favourites = videos.filter((v) => v.favourite);
+    const history = videos.filter((v) => !v.favourite).slice(0, 26);
+    set({ videos: [...favourites, ...history] });
+    persist(get());
   },
 
   toggleFavourite: (videoId) => {
     const videos = get().videos.map((v) => {
-      if (v.videoId !== videoId) return v
-      const nowFavourite = !v.favourite
+      if (v.videoId !== videoId) return v;
+      const nowFavourite = !v.favourite;
       return {
         ...v,
         favourite: nowFavourite,
         // If unfavouriting, push to top of history by updating lastPlayed
         lastPlayed: nowFavourite ? v.lastPlayed : new Date().toISOString(),
-      }
-    })
+      };
+    });
     // Re-sort: favourites first, then by lastPlayed descending
-    const favourites = videos.filter((v) => v.favourite)
-    const history = videos.filter((v) => !v.favourite)
-    history.sort((a, b) => new Date(b.lastPlayed).getTime() - new Date(a.lastPlayed).getTime())
-    set({ videos: [...favourites, ...history.slice(0, 26)] })
-    persist(get())
+    const favourites = videos.filter((v) => v.favourite);
+    const history = videos.filter((v) => !v.favourite);
+    history.sort(
+      (a, b) =>
+        new Date(b.lastPlayed).getTime() - new Date(a.lastPlayed).getTime(),
+    );
+    set({ videos: [...favourites, ...history.slice(0, 26)] });
+    persist(get());
   },
 
   removeVideo: (videoId) => {
-    set({ videos: get().videos.filter((v) => v.videoId !== videoId) })
-    persist(get())
+    set({ videos: get().videos.filter((v) => v.videoId !== videoId) });
+    persist(get());
   },
 
   /* Player state */
@@ -306,83 +313,98 @@ export const useStore = create<PocketState>((set, get) => ({
   setEmbedBlocked: (b) => set({ embedBlocked: b }),
 
   speedUp: () => {
-    const current = get().playbackRate
-    const idx = PLAYBACK_RATES.indexOf(current as typeof PLAYBACK_RATES[number])
-    const next = idx === -1 || idx === PLAYBACK_RATES.length - 1 ? 0 : idx + 1
-    set({ playbackRate: PLAYBACK_RATES[next] })
+    const current = get().playbackRate;
+    const idx = PLAYBACK_RATES.indexOf(
+      current as (typeof PLAYBACK_RATES)[number],
+    );
+    const next = idx === -1 || idx === PLAYBACK_RATES.length - 1 ? 0 : idx + 1;
+    set({ playbackRate: PLAYBACK_RATES[next] });
   },
 
   slowDown: () => {
-    const current = get().playbackRate
-    const idx = PLAYBACK_RATES.indexOf(current as typeof PLAYBACK_RATES[number])
-    const next = idx <= 0 ? PLAYBACK_RATES.length - 1 : idx - 1
-    set({ playbackRate: PLAYBACK_RATES[next] })
+    const current = get().playbackRate;
+    const idx = PLAYBACK_RATES.indexOf(
+      current as (typeof PLAYBACK_RATES)[number],
+    );
+    const next = idx <= 0 ? PLAYBACK_RATES.length - 1 : idx - 1;
+    set({ playbackRate: PLAYBACK_RATES[next] });
   },
 
   /* Bookmarks */
   getBookmarks: () => {
-    const vid = get().currentVideoId
-    if (!vid) return []
-    return [...(get().bookmarksByVideo[vid] ?? [])].sort((a, b) => a.time - b.time)
+    const vid = get().currentVideoId;
+    if (!vid) return [];
+    return [...(get().bookmarksByVideo[vid] ?? [])].sort(
+      (a, b) => a.time - b.time,
+    );
   },
 
   addBookmark: (time) => {
-    const vid = get().currentVideoId
-    if (!vid) return
-    const existing = get().bookmarksByVideo[vid] ?? []
-    const bookmark: Bookmark = { id: makeId(), time: Math.round(time * 10) / 10 }
+    const vid = get().currentVideoId;
+    if (!vid) return;
+    const existing = get().bookmarksByVideo[vid] ?? [];
+    const bookmark: Bookmark = {
+      id: makeId(),
+      time: Math.round(time * 10) / 10,
+    };
     set({
       bookmarksByVideo: {
         ...get().bookmarksByVideo,
         [vid]: [...existing, bookmark].sort((a, b) => a.time - b.time),
       },
-    })
-    persist(get())
+    });
+    persist(get());
   },
 
   removeBookmarkNearTime: (time) => {
-    const vid = get().currentVideoId
-    if (!vid) return
-    const existing = get().bookmarksByVideo[vid] ?? []
-    if (existing.length === 0) return
-    let closest = existing[0]
+    const vid = get().currentVideoId;
+    if (!vid) return;
+    const existing = get().bookmarksByVideo[vid] ?? [];
+    if (existing.length === 0) return;
+    let closest = existing[0];
     for (const b of existing) {
-      if (Math.abs(b.time - time) < Math.abs(closest.time - time)) closest = b
+      if (Math.abs(b.time - time) < Math.abs(closest.time - time)) closest = b;
     }
     set({
       bookmarksByVideo: {
         ...get().bookmarksByVideo,
         [vid]: existing.filter((b) => b.id !== closest.id),
       },
-    })
-    persist(get())
+    });
+    persist(get());
   },
 
   /* Loop */
   engageAutoLoop: () => {
-    const time = get().currentTime
-    const bookmarks = get().getBookmarks()
-    const duration = get().duration
+    const time = get().currentTime;
+    const bookmarks = get().getBookmarks();
+    const duration = get().duration;
 
     // Find nearest bookmark before and after
-    let loopStart: Bookmark | null = null
-    let loopEnd: Bookmark | null = null
+    let loopStart: Bookmark | null = null;
+    let loopEnd: Bookmark | null = null;
 
     for (const b of bookmarks) {
-      if (b.time <= time) loopStart = b
+      if (b.time <= time) loopStart = b;
     }
     for (const b of bookmarks) {
       if (b.time > time) {
-        loopEnd = b
-        break
+        loopEnd = b;
+        break;
       }
     }
 
     // Use start/end of video as pseudo-bookmarks
-    if (!loopStart) loopStart = { id: '__start', time: 0 }
-    if (!loopEnd) loopEnd = { id: '__end', time: duration }
+    if (!loopStart) loopStart = { id: "__start", time: 0 };
+    if (!loopEnd) loopEnd = { id: "__end", time: duration };
 
-    set({ looping: true, loopStart, loopEnd, manualLoopPicking: false, manualLoopFirstPoint: null })
+    set({
+      looping: true,
+      loopStart,
+      loopEnd,
+      manualLoopPicking: false,
+      manualLoopFirstPoint: null,
+    });
   },
 
   engageManualLoop: () => {
@@ -392,53 +414,57 @@ export const useStore = create<PocketState>((set, get) => ({
       loopEnd: null,
       manualLoopPicking: true,
       manualLoopFirstPoint: null,
-    })
+    });
   },
 
   handleManualLoopTap: (time: number) => {
-    const state = get()
-    if (!state.manualLoopPicking) return
+    const state = get();
+    if (!state.manualLoopPicking) return;
 
-    const bookmarks = state.getBookmarks()
+    const bookmarks = state.getBookmarks();
 
     // If tap is within 2s of an existing bookmark, snap to it
-    let point: Bookmark | null = null
+    let point: Bookmark | null = null;
     for (const b of bookmarks) {
       if (Math.abs(b.time - time) <= 2) {
-        point = b
-        break
+        point = b;
+        break;
       }
     }
 
     if (!point) {
       // Create new bookmark
-      const id = makeId()
-      const roundedTime = Math.round(time * 10) / 10
-      point = { id, time: roundedTime }
-      const vid = state.currentVideoId
+      const id = makeId();
+      const roundedTime = Math.round(time * 10) / 10;
+      point = { id, time: roundedTime };
+      const vid = state.currentVideoId;
       if (vid) {
-        const existing = state.bookmarksByVideo[vid] ?? []
+        const existing = state.bookmarksByVideo[vid] ?? [];
         set({
           bookmarksByVideo: {
             ...state.bookmarksByVideo,
             [vid]: [...existing, point].sort((a, b) => a.time - b.time),
           },
-        })
+        });
       }
     }
 
     if (state.manualLoopFirstPoint === null) {
-      set({ manualLoopFirstPoint: point.time })
+      set({ manualLoopFirstPoint: point.time });
     } else {
-      const first = state.manualLoopFirstPoint
-      const second = point.time
-      const startTime = Math.min(first, second)
-      const endTime = Math.max(first, second)
+      const first = state.manualLoopFirstPoint;
+      const second = point.time;
+      const startTime = Math.min(first, second);
+      const endTime = Math.max(first, second);
 
       // Find or create bookmarks for the start/end
-      const allBookmarks = get().getBookmarks()
-      const loopStart = allBookmarks.find((b) => Math.abs(b.time - startTime) < 0.5) ?? { id: makeId(), time: startTime }
-      const loopEnd = allBookmarks.find((b) => Math.abs(b.time - endTime) < 0.5) ?? { id: makeId(), time: endTime }
+      const allBookmarks = get().getBookmarks();
+      const loopStart = allBookmarks.find(
+        (b) => Math.abs(b.time - startTime) < 0.5,
+      ) ?? { id: makeId(), time: startTime };
+      const loopEnd = allBookmarks.find(
+        (b) => Math.abs(b.time - endTime) < 0.5,
+      ) ?? { id: makeId(), time: endTime };
 
       set({
         looping: true,
@@ -446,9 +472,9 @@ export const useStore = create<PocketState>((set, get) => ({
         loopEnd,
         manualLoopPicking: false,
         manualLoopFirstPoint: null,
-      })
+      });
     }
-    persist(get())
+    persist(get());
   },
 
   clearLoop: () => {
@@ -458,9 +484,9 @@ export const useStore = create<PocketState>((set, get) => ({
       loopEnd: null,
       manualLoopPicking: false,
       manualLoopFirstPoint: null,
-    })
+    });
   },
 
   toggleSubmenu: () => set({ submenuOpen: !get().submenuOpen }),
   closeSubmenu: () => set({ submenuOpen: false }),
-}))
+}));

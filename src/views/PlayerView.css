@@ -83,35 +83,3 @@
   flex-wrap: wrap;
   flex: 1;
 }
-
-.player__back {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem;
-  background: var(--colour-bg-2);
-}
-
-.player__back-btn {
-  padding: 0.4rem 0.75rem;
-  border: 1px solid var(--colour-trim-1);
-  border-radius: 0.25rem;
-  background: var(--colour-bg-3);
-  color: var(--colour-text);
-  cursor: pointer;
-  font-size: 0.85rem;
-}
-
-.player__back-btn:hover {
-  background: var(--colour-bg-4);
-}
-
-.player__yt-link {
-  color: var(--colour-trim-2);
-  font-size: 0.85rem;
-  text-decoration: none;
-}
-
-.player__yt-link:hover {
-  text-decoration: underline;
-}
